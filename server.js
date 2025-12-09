@@ -14,20 +14,21 @@ const app = express();
 const PORT = Number(process.env.PORT || 4000);
 
 // ✅ CORS Configuration
-app.use(
-  cors({
-    origin: [
-      "https://public-speaking-for-kids2.vercel.app",
-      "http://localhost:5173",
-      "http://localhost:3000"
-    ],
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+app.use(cors({
+  origin: [
+    "https://public-speaking-for-kids-v21.vercel.app",
+    "https://public-speaking-for-kids2.vercel.app",
+    "http://localhost:5173",
+    "http://localhost:3000"
+  ],
+  credentials: true,
+}));
 
-app.options("*", cors());
+
+// Use explicit preflight handlers instead of a wildcard to avoid path-to-regexp errors
+app.options("/api/chat", cors());
+app.options("/api/generate", cors());
+app.options("/api/tts", cors());
 
 app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true }));
@@ -130,6 +131,7 @@ async function handleChatRequest(req, res) {
       });
 
       const json = await resp.json().catch(() => null);
+      console.log("📥 GEMINI RAW RESPONSE:", JSON.stringify(json, null, 2));
 
       if (!resp.ok) {
         console.error("Gemini API error", resp.status, json);
@@ -243,3 +245,10 @@ app.use("/audio", express.static(path.join(process.cwd(), "audio")));
 
 // Keep this for Vercel:
 export default app;
+// If running locally (not on Vercel), start the Express server.
+// This keeps the file compatible with Vercel (export default app)
+if (process.env.VERCEL === undefined) {
+  app.listen(PORT, () => {
+    console.log(`Server listening on http://localhost:${PORT} (NODE_ENV=${process.env.NODE_ENV || 'development'})`);
+  });
+}
