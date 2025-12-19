@@ -61,7 +61,7 @@ export default async function handler(req) {
     // ============================================
     // GEMINI STREAMING API
     // ============================================
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:streamGenerateContent?alt=sse&key=${apiKey}`;
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-.5-flash:streamGenerateContent?alt=sse&key=${apiKey}`;
 
     const geminiResponse = await fetch(geminiUrl, {
       method: 'POST',
