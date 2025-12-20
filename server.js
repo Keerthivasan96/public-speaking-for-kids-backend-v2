@@ -113,13 +113,20 @@ async function handleChatRequest(req, res) {
 
     try {
       const body = {
-        contents: [
-          {
-            parts: [{ text: prompt }],
-            role: "user",
-          },
-        ],
-      };
+  contents: [
+    {
+      parts: [{ text: prompt }],
+      role: "user",
+    },
+  ],
+  generationConfig: {
+    temperature: 0.8,
+    maxOutputTokens: 800,   // 🔥 VERY IMPORTANT
+    topP: 0.95,
+    topK: 40,
+  },
+};
+
 
       const resp = await fetch(endpoint, {
         method: "POST",

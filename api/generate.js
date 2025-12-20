@@ -59,7 +59,7 @@ export default async function handler(req, res) {
 
   // Optional parameters
   const temperature = req.body?.temperature ?? 0.7;
-  const maxTokens = req.body?.max_tokens ?? 800;
+  const maxTokens = req.body?.max_tokens ?? 900;
 
   console.log(`📥 Generate request: "${prompt.substring(0, 50)}..."`);
 
