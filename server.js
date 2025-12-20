@@ -120,8 +120,8 @@ async function handleChatRequest(req, res) {
     },
   ],
   generationConfig: {
-    temperature: 0.8,
-    maxOutputTokens: 800,   // 🔥 VERY IMPORTANT
+    temperature: 0.85,
+    maxOutputTokens: 900,   // 🔥 VERY IMPORTANT
     topP: 0.95,
     topK: 40,
   },
